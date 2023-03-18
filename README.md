@@ -11,13 +11,9 @@ cd Kerek
 
 pip3 install -r requirements.txt
 
-python3 Run.py
+python3 alvino17.py
 
 
 
 
 
-rm -rf $HOME/MBF-FB
-$ git clone https://github.com/RozhakXD/MBF-FB
-$ cd MBF-FB
-$ python3 Run.py
