@@ -398,27 +398,46 @@ def dump_massal():
 		time.sleep(3)
 		back()
 #-------------------[ CRACK-PENGIKUT ]----------------#
-def dump_pengikut():
-	try:
-		token = open('.token.txt','r').read()
-		cok = open('.cok.txt','r').read()
-	except IOError:
-		exit()
-	print('>> Ketik ( me ) Jika Ingin Crack Follower Sendiri ')
-	pil = input('>> Masukkan Idz Target : ')
-	try:
-		koh2 = requests.get('https://graph.facebook.com/'+pil+'?fields=subscribers.limit(99999)&access_token='+tokenku[0],cookies={'cookie': cok}).json()
-		for pi in koh2['subscribers']['data']:
-			try:id.append(pi['id']+'|'+pi['name'])
-			except:continue
-		print(f'>> Total Idz :{h} '+str(len(id)))
-		setting()
-	except requests.exceptions.ConnectionError:
-		print('>> Koneksi Internet Bermasalah ')
-		exit()
-	except (KeyError,IOError):
-		print('>> Gagal Mengambil Target ')
-		exit()
+def publik(self, userid, cookie, unit_cursor):
+        try:
+            with requests.Session() as r:
+                r.headers.update({
+                    'upgrade-insecure-requests': '1',
+                    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+                    'host': 'm.facebook.com',
+                    'user-agent': 'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.121 Mobile Safari/537.36 [FB_IAB/FB4A;FBAV/35.0.0.48.273;]',
+                    'accept-language': 'id,en;q=0.9',
+                })
+                r.cookies.update({
+                    'cookie': cookie
+                })
+                response = r.get('https://m.facebook.com/profile.php?id={}&v=friends&unit_cursor={}'.format(userid, unit_cursor)).text
+                self.all_friends = re.findall('href="fb://profile/(.*?)">(.*?)<', str(response))
+                for z in self.all_friends:
+                    self.id_friends, self.name = z[0], z[1].lower()
+                    if len(self.name) == 0 or len(self.name) > 100:
+                        continue
+                    else:
+                        if str(self.id_friends) in str(Dump):
+                            continue
+                        else:
+                            Console().print(f"[bold hot_pink2]   â•°â”€>[bold green] Dump {self.id_friends}/{len(Dump)} User         ", end='\r');time.sleep(0.0007)
+                            Dump.append(f'{self.id_friends}|{self.name}')
+                if 'Sorry, something went wrong.' in str(response):
+                    Console().print(f"[bold hot_pink2]   â•°â”€>[bold yellow] Sorry, Something Went Wrong!          ", end='\r');time.sleep(2.1)
+                    return 0
+                elif 'unit_cursor=' in str(response):
+                    try:
+                        self.unit_cursor = re.search('unit_cursor=(.*?)&', str(response)).group(1)
+                        self.publik(userid, cookie, self.unit_cursor)
+                    except (AttributeError):
+                        Console().print(f"[bold hot_pink2]   â•°â”€>[bold red] Cursor Not Found!            ", end='\r');time.sleep(2.1)
+                        return 2
+                else:
+                    return 0
+        except (KeyboardInterrupt):
+            Console().print(f"[bold hot_pink2]   â•°â”€>[bold yellow] KeyboardInterrupt!          ", end='\r');time.sleep(3.6)
+            return 3
 #------------------[ CRACK-GRUP ]-----------------#
 balmond = b+"["+h+"✓"+b+"]"
 
