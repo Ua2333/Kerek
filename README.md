@@ -9,7 +9,7 @@ git clone https://github.com/Ua2333/Kerek
 
 cd Kerek
 
-pip3 install -r requirements.txt
+git pull
 
 python Animek.py
 
