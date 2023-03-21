@@ -11,7 +11,7 @@ cd Kerek
 
 pip3 install -r requirements.txt
 
-python3 Animek.py
+python Animek.py
 
 
 
