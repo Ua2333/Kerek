@@ -11,7 +11,7 @@ cd Kerek
 
 git pull
 
-python Animek.py
+python runDito1.py
 
 
 
