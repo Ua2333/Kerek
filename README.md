@@ -1,5 +1,4 @@
-
-apt update -y && apt upgrade -y
+by kh dito
 
 pkg install git
 
